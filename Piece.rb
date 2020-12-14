@@ -6,6 +6,10 @@ class Piece
         return @colour
     end
 
+    def setLocation(Location)
+        @location = Location
+    end
+
     def location
         return @location
     end
