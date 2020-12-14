@@ -113,7 +113,7 @@ class Board
 
   #Checks if piece is adjacent to location
   def isAdjacent(piece, location)
-    if piece.instance_of?(Piece) && newLocation.instance_of?(Location) && piece.location != nil
+    if piece.instance_of?(Piece) && location.instance_of?(Location) && piece.location != nil
       x1 = piece.location.coordinates[0]
       y1 = piece.location.coordinates[1]
       x2 = location.coordinates[0]
