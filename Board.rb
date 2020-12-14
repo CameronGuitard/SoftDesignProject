@@ -224,7 +224,7 @@ class Board
           end
         when "43"
           case locationCoordinates
-          when "42", "43", "53"
+          when "42", "44", "53"
             adjacent = true
           else
           end
