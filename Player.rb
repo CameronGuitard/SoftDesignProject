@@ -5,7 +5,7 @@ require_relative "Piece.rb"
 class Player
     attr_writer :gameBoard
     attr_writer :gameController
-    attr_accessor :isActive
+    attr_accessor :isActive, :name
     attr_reader :playedPieces, :unplayedPieces
     #This initializing the player with a name, a gameBoard instance and a gameController instance 
     def initialize(name)
@@ -13,6 +13,7 @@ class Player
         @unplayedPieces = []
         @playedPieces = []
         @isActive = false
+        @colour = nil
         @gameBoard = nil
         @gameController = nil
     end

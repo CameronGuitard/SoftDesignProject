@@ -28,7 +28,9 @@ class GameController
             row.each do |location|
                 
                 # removes all pieces from the board.
-                location.removePiece()                                        
+                if location
+                    location.removePiece()                                        
+                end
             end
         end
 
@@ -278,7 +280,6 @@ class GameController
         if answer == 't'
             if @coin.display == 'Heads'
                 first = false
-                
             else
                 first = true
             end
@@ -295,18 +296,23 @@ class GameController
         # assigns colours baised on who goes first
         if first
             player1.givePieces("#FF0000")
+            player1.setColour("#FF0000")
             player2.givePieces("#0000FF")
+            player2.setColour("#0000FF")
         else
             player1.givePieces("#0000FF")
+            player1.setColour("#0000FF")
             player2.givePieces("#FF0000")
+            player2.setColour("#FF0000")
+            
         end
 
         if first
-            puts "Congrats Player 1 you are going first"
+            puts player1.name + ", You are going first"
             @view.refreshBoard(@board, [])
             player1.turnStart()
         else
-            puts "Player 1, You are going second"
+            puts player2.name + ", You are going first"
             @view.refreshBoard(@board, [])
             player2.turnStart()
         end
