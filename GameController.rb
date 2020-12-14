@@ -1,0 +1,397 @@
+class GameController
+    # each player has a bag and a cup
+    def initialize(player1, player2)
+        @player1 = player1
+        @player2 = player2
+        @board = Board.new() # creates new Board
+        @coin = Coin.new() # new coin
+        @view = GameView.new() # might not need this
+    end
+    attr_reader :bag, :cup, :throw_arr  #accessor for bag and cup 
+
+    #public method
+    #Resets the game, returns true if successfull
+    def reset()
+
+        @board.locations.each do |row|
+            row.each do |location|
+                
+                # removes all pieces from the board.
+                location.removePiece()                                        
+            end
+        end
+
+        # player 1, remove all pieces
+        for piece in @player1.unplayedPieces
+            piece = nil
+        end
+
+        # player2, remove all pieces
+        for piece in @player2.unplayedPieces
+            piece = nil         
+        end
+
+        # assign players pieces.
+        @player1.givePieces(@player1.assignedColour())
+        @player2.givePieces(@player2.assignedColour())
+
+        if @player1.assignedColour() == "White"
+            @player1.turnStart()
+        else
+            @player2.turnStart()
+        end 
+
+    end
+    
+    #public
+    # checks the board for a new mil
+    # returns true if there is a new mil
+    # false if there is not
+    def checkMill(piece)
+
+        #  each piece can be in a verticle and horizontal mill.
+        #  given a coordinate (letter and number) a verticle mill can be determined by searching the array for every number value that has the letter coordinate.
+            # e.g if (d,2) is passed in, then to see if there is a vericle mill (d,1), (d,2) and (d,3) will be found in the array of locations
+            # call selectPiece() on each space, if any spaces are empty there is no mill
+            # call  piece.colour, if all 3 pieces are the same colour of the passed piece, then it is a Mill, Return True
+        # check for a horizontal mill. horizontal mill can be determined by searching the array for every coordinate that shares the number.
+            # e.g if (G,1) is passed in, then to see if there is a vericle mill (G,1), (D,1) and (A,1) will be found in the array of locations
+            # call selectPiece() on each space, if any spaces are empty there is no mill
+            # call  piece.colour, if all 3 pieces are the same colour of the passed piece, then it is a Mill, Return True
+        # there will be a special consideration for any piece containing 4. 
+
+        # location of piece
+        location = piece.location()
+        X_coordinate = location[0]
+        Y_coordinate = location[1]
+
+        hMill = false
+        vMill = false
+
+        VerticalMill = []
+        HorizontalMill = []
+        
+        #horisontal
+        @board.locations.each do |row|
+            row.each do |location|
+                
+                if location.piece != nil && location[0] == X_coordinate
+                    HorizontalMill.push(location.piece)
+                end                                 
+            end
+        end
+
+        #verticle
+        @board.locations.each do |row|
+            row.each do |location|           
+                if location.piece != nil && location[0] == Y_coordinate
+                    VerticalMill.push(location.piece)
+                end
+            end
+        end
+
+
+        if VerticalMill.length > 3
+            puts "I made an oopsy this should not happen. test this later im to lazy now"
+        elsif VerticalMill.length == 3
+            # check for mill
+            # assume there is a mill
+            vMill = true
+            for millPiece in VerticalMill
+                if !(millPiece.colour() == piece.colour())
+                    vMill = false
+                end
+            end
+        else
+            # there is no vertical mill
+            vMill = false
+        end
+
+
+        if HorizontalMill.length > 3
+            puts "I made an oopsy this should not happen. test this later im to lazy now"
+        elsif HorizontalMill.length == 3
+            # check for mill
+            # assume there is a mill
+            hMill = true
+            for millPiece in HorizontalMill
+                if !(millPiece.colour() == piece.colour())
+                    hMill = false
+                end
+            end
+        else
+            # there is no vertical mill
+            hMill = false
+        end
+        
+        if vMill || hMill
+            return true
+        else
+            return false
+        end
+        
+
+
+
+
+    end
+
+    # public method
+    # ensures that a move a player is attempting is valid.
+    # returns true if valid
+    # false if not
+    def validMove(piece, newLocation)
+        # piece can move to any empty adjacent space.
+        # might need to account for placing pieces. can be counted as a fly move i guess 
+
+        # check if its a fly move. 
+        if player1.isActive
+           if player1.numUnplayedPieces <=3
+                fly = true 
+           else
+                fly = false
+           end
+        else
+            if player2.numUnplayedPieces <=3
+                fly = true 
+           else
+                fly = false
+           end
+        end
+
+
+        #checks if space is empty:
+        if @board.selectLocation(newLocation).isEmpty
+
+            # check if its a fly move
+            if fly
+                # if its a fly and the target location is empty its allowed. 
+                return true
+            else
+                # should return true if the move is valid.
+                bool = @board.isAdjacent(piece,newLocation)
+            end
+        else
+            # should the space is not empty, the move is invalid
+            return false
+        end
+
+    end
+    
+    # public method
+    # ensures that the capture a player is attempting is valid.
+    # returns true if valid
+    # false if not
+    def validRemoval(targetPiece)
+
+        ## check if piece is in a mill    
+        if !checkMill(targetPiece)
+            # not in mill it is a valid capture
+            return true
+        else
+            # it is in a mill, check if it is a valid removal
+            if targetPiece.colour == @player1.assignedColour()
+                #piece is player1's
+                
+                for piece in @player1.playedPieces
+                    if !checkMill(piece)
+                        # if a piece is not in a mill
+                        return false
+                    end
+                end
+
+            else
+                #piece is player 2's
+                for piece in @player2.playedPieces
+                    if !checkMill(piece)
+                        # if a piece is not in a mill
+                        return false
+                    end
+                end
+            end
+
+        end
+        
+        #if it exits from above then it will be a valid removal. 
+        return true
+
+    end
+
+    # public method
+    # starts a game
+    # P1 is player who started game
+    # P2 is player who joined
+    def startGame(player1, player2)
+
+        puts " Do you want heads(h) or tails(t)?"
+        answer = gets
+        answer = answer.chomp
+        first = false
+
+        # flips the coin
+        coin.flip
+
+        # player1 calls what face they want
+        if answer == 't'
+            if coin.display == '0'
+                first = true
+                
+            else
+                first = true
+            end
+        elsif answer == 'h'
+            if coin.display == '0'
+                first = true
+            else
+                first = true
+            end
+        else
+            if coin.display == '0'
+                first = true
+            else
+                first = true
+            end
+        end
+
+        # assigns colours baised on who goes first
+        if first
+            player1.givePieces(White)
+            player2.givePieces(Black)
+        else
+            player1.givePieces(Black)
+            player2.givePieces(White)
+        end
+
+        if first
+            puts "Congrats Player 1 you are going first"
+            player1.turnStart()
+        else
+            puts "Player 1, You are going second"
+            player2.turnStart()
+        end
+        
+
+
+    end
+
+    # public method
+    # checks board for a winner
+    # if there is a winner then the game is ended
+    def checkWin()
+        # bool vars to check valid moves 
+        player1Valid = false
+        player2Valid = false
+
+        if @player1.numPlayedPieces <=2 && @player1.numUnplayedPieces == 0 
+            puts "Player 2 has won the game!"
+        elsif @player2.numPlayedPieces <=2 && @player2.numUnplayedPieces == 0 
+            puts "Player 1 has won the game!"
+        else
+            # both players have more then 2 pieces on the bord.
+            # check if players have valid moves left.
+            if @player1.numUnplayedPieces >= 0 
+                # No winner there is a valid move for player1.
+                puts "Player 1 has valid moves"
+                return false
+            elsif @player2.numUnplayedPieces >= 0 
+                puts "Player 2 has valid moves"
+                return false
+            else
+                # check if any moves are possible.
+
+                # player 1
+                # until true, loop through played pieces, for each location call validMove(). there is no (get adjacent function so this is clunky sorry)
+                for piece in @player1.playedPieces
+                    
+                    @board.locations.each do |row|
+                        row.each do |location|
+                            
+                            # validMove will return true if it is valid. 
+                            if validMove(piece, location)
+                                player1Valid = true
+                            end 
+                            break if player1Valid                           
+                        end
+                        break if player1Valid 
+                    end
+                    break if player1Valid 
+                end
+
+                #player2
+                for piece in @player2.playedPieces
+                    
+                    @board.locations.each do |row|
+                        row.each do |location|
+                            
+                            # validMove will return true if it is valid. 
+                            if validMove(piece, location)
+                                player2Valid = true
+                            end 
+                            break if player2Valid                            
+                        end
+                        break if player2Valid   
+                    end
+                    break if player2Valid   
+                end
+                
+
+                if !player1Valid && !player2Valid   
+                    puts "Both Player's have no moves. The game is a draw"
+                    reset()
+                    @view.refreshBoard() #TODO: check this. 
+                
+                elsif !player1Valid
+                    # player1 has no remaining moves
+                    puts  @player1.name +" has no valid moves,"  + @player2.name + " wins!"
+                    reset()
+                    @view.refreshBoard() #TODO: check this. 
+
+                
+                elsif !player2Valid
+                    # player1 has no rem
+                    puts  @player2.name +" has no valid moves,"  + @player1.name + " wins!"
+                    reset()
+                    @view.refreshBoard() #TODO: check this. 
+                    
+                else
+                    puts " both players have valid moves left. The game is not over."
+                
+                end
+
+
+            end
+        end
+
+    end
+
+    # public method
+    # called by a player
+    # Msg is sent to other player, if that player accepts the game is ended.
+    def forefit(player)
+
+       # @player1.turnEnd()
+       # @player2.turnEnd()
+       # player.turnStart()
+
+        puts  player.name +" Please accept(Y) or reject(N) your opponents surrender."
+        answer = gets
+        answer = answer.chomp
+
+        # handle input
+        if answer == 'Y' || answer == 'y'
+            # player1 calls what face they want
+            puts  player.name +" Has won the game!"
+            reset()
+            @view.refreshBoard() #TODO: check this
+
+
+        elsif answer == 'N' || answer == 'n'
+            # player1 calls what face they want
+            puts  player.name +" Has rejected surrender. The game continues!"
+
+        else
+            puts  player.name +" Has suplied invalid input. The game continues!"
+            
+        end
+
+    end
