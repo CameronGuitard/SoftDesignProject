@@ -1,4 +1,4 @@
-require_relative "Piece"
+require_relative "Piece.rb"
 
 #Location object which stores its coordinates and a Piece
 class Location

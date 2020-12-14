@@ -1,4 +1,4 @@
-require_relative "piece"
+require_relative "Piece.rb"
 #
 #   This class represents a player for the game
 #

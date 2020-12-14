@@ -1,5 +1,5 @@
-require "./Player.rb"
-require "./GameController.rb"
+require_relative "Player.rb"
+require_relative "GameController.rb"
 
 puts "Please enter player 1's name"
 input = gets.chomp

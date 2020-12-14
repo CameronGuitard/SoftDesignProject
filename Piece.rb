@@ -1,4 +1,4 @@
-require_relative 'location'
+require_relative 'Location.rb'
 
 class Piece
     attr_accessor :colour
