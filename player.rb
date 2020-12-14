@@ -4,14 +4,17 @@ require "./Piece.rb"
 #
 class Player
     #This initializing the player with a name, a gameboard instance and a gameController instance 
-    def initialize(name,gameboard,gameController)
+    def initialize(name)
         @name = name
         @unplayedPieces = []
         @playedPieces = []
         @isActive = false
-        @gameboard = gameboard
-        @gameController = gameController
+        @gameboard = nil
+        @gameController = nil
     end
+
+    attr_writer :gameboard
+    attr_writer :gameController
 
     #This function starts the the players turn and handles all its input and calling other classes
     def turnStart()
@@ -29,6 +32,7 @@ class Player
                 if validMove
                     @gameboard.movePiece(currentPiece,location)
                     @unplayedPieces.shift()
+                end
             end
         else #Workflow for when the player is moving pieces around the board
             validMove = false
@@ -44,6 +48,7 @@ class Player
                 validMove = @gameController.validMove(selectedPiece,selectedLocation)
                 if validMove
                     @gameboard.movePiece(selectedPiece,selectedLocation)
+                end
             end
         end
 
@@ -73,6 +78,7 @@ class Player
     def givePieces(colour)
         for i in 1..12 do
             @unplayedPieces.push(colour)
+        end
     end
 
     #This returns the number of played piece 
