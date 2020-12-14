@@ -3,18 +3,17 @@ require "./Piece.rb"
 #   This class represents a player for the game
 #
 class Player
-    #This initializing the player with a name, a gameboard instance and a gameController instance 
+    attr_writer :gameBoard
+    attr_writer :gameController
+    #This initializing the player with a name, a gameBoard instance and a gameController instance 
     def initialize(name)
         @name = name
         @unplayedPieces = []
         @playedPieces = []
         @isActive = false
-        @gameboard = nil
+        @gameBoard = nil
         @gameController = nil
     end
-
-    attr_writer :gameboard
-    attr_writer :gameController
 
     #This function starts the the players turn and handles all its input and calling other classes
     def turnStart()
@@ -27,10 +26,10 @@ class Player
                 puts "Please select the location to place a piece with the following format 'x y'"
                 input = gets.chomp
                 coordinates = input.split(' ')
-                location = @gameboard.selectLocation(coordinates[0],coordinates[1])
+                location = @gameBoard.selectLocation(coordinates[0],coordinates[1])
                 validMove = @gameController.validMove(currentPiece,location)
                 if validMove
-                    @gameboard.movePiece(currentPiece,location)
+                    @gameBoard.movePiece(currentPiece,location)
                     @unplayedPieces.shift()
                 end
             end
@@ -40,14 +39,14 @@ class Player
                 puts "Please select the piece to move with the following format 'x y'"
                 input = gets.chomp
                 coordinates.split(' ')
-                selectedPiece = @gameboard.selectPiece(coordinates[0],coordinates[1])
+                selectedPiece = @gameBoard.selectPiece(coordinates[0],coordinates[1])
                 puts "Please select the location to move the piece to with the following format 'x y'"
                 input = gets.chomp
                 coordinates.split(' ')
-                selectedLocation = @gameboard.selectPiece(coordinates[0],coordinates[1])
+                selectedLocation = @gameBoard.selectPiece(coordinates[0],coordinates[1])
                 validMove = @gameController.validMove(selectedPiece,selectedLocation)
                 if validMove
-                    @gameboard.movePiece(selectedPiece,selectedLocation)
+                    @gameBoard.movePiece(selectedPiece,selectedLocation)
                 end
             end
         end
@@ -60,10 +59,10 @@ class Player
                 puts "Please select an opponents piece to remove with the following format 'x y'"
                 input = gets.chomp
                 coordinates = input.split(' ')
-                milledPiece = @gameboard.selectPiece(coordinates[0],coordinates[1])
+                milledPiece = @gameBoard.selectPiece(coordinates[0],coordinates[1])
                 validRemoval = @gameController.validRemoval(milledPiece)
                 if validMill
-                    @gameboard.removePiece(milledPiece)
+                    @gameBoard.removePiece(milledPiece)
                 end
             end
         end

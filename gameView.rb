@@ -5,8 +5,11 @@ class GameView
     def refreshBoard(board, millPieces)
         board.locations.each {|row|
             printableRow = ""
+            puts " look under"
+            puts row
+            puts " look up"
             row.each{|location|
-                if location.isEmpty()
+                if location == nil || location.isEmpty()
                     printableRow += " "
                 else
                     isMill = false
@@ -18,7 +21,7 @@ class GameView
                     }
                     if isMill
                         printableRow += "o".yellow
-                    elsif (location.piece.colour() == "#0000FF")
+                    elsif location != nil && location.piece.colour() == "#0000FF"
                         printableRow += "o".blue
                     else
                         printableRow += "o".red

@@ -43,7 +43,7 @@ class GameController
         end
 
         # calls start game
-        startGame()
+        startGame(@player1, @player2)
 
     end
     
@@ -157,14 +157,14 @@ class GameController
         # might need to account for placing pieces. can be counted as a fly move i guess 
 
         # check if its a fly move. 
-        if player1.isActive
-           if player1.numUnplayedPieces <=3
+        if @player1.isActive
+           if @player1.numUnplayedPieces <=3
                 fly = true 
            else
                 fly = false
            end
         else
-            if player2.numUnplayedPieces <=3
+            if @player2.numUnplayedPieces <=3
                 fly = true 
            else
                 fly = false
@@ -250,46 +250,42 @@ class GameController
         first = false
 
         # flips the coin
-        coin.flip
+        @coin.flip
 
         # player1 calls what face they want
         if answer == 't'
-            if coin.display == '0'
-                first = true
+            if @coin.display == 'Heads'
+                first = false
                 
             else
                 first = true
             end
         elsif answer == 'h'
-            if coin.display == '0'
+            if @coin.display == 'Heads'
                 first = true
             else
-                first = true
+                first = false
             end
         else
-            if coin.display == '0'
-                first = true
-            else
-                first = true
-            end
+            puts " fix later"
         end
 
         # assigns colours baised on who goes first
         if first
-            player1.givePieces(White)
-            player2.givePieces(Black)
+            player1.givePieces("#FF0000")
+            player2.givePieces("#0000FF")
         else
-            player1.givePieces(Black)
-            player2.givePieces(White)
+            player1.givePieces("#0000FF")
+            player2.givePieces("#FF0000")
         end
 
         if first
             puts "Congrats Player 1 you are going first"
-            @view.refreshBoard(@board)
+            @view.refreshBoard(@board, [])
             player1.turnStart()
         else
             puts "Player 1, You are going second"
-            @view.refreshBoard(@board)
+            @view.refreshBoard(@board, [])
             player2.turnStart()
         end
         
@@ -299,13 +295,13 @@ class GameController
                 # player 1 is active
                 @player1.turnEnd()
                 @view.refreshTurnIndicator(@player1)
-                @view.refreshBoard(@board)
+                @view.refreshBoard(@board, [])
                 player2.turnStart()
              else
                 # player 2 is active
                 @player2.turnEnd()
                 @view.refreshTurnIndicator(@player2)
-                @view.refreshBoard(@board)
+                @view.refreshBoard(@board, [])
                 player1.turnStart()
              end
 

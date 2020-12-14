@@ -4,9 +4,10 @@ require_relative "Piece"
 #Board object which stores locations and pieces
 class Board
 
+  attr_reader :locations
   #Creates a new instance of board containing empty locations
   def initialize
-    @locations = Array.new(7)
+    @locations = []
     l00 = Location.new
     l00.coordinates.insert(0, 0, 0)
     l03 = Location.new
@@ -55,13 +56,13 @@ class Board
     l63.coordinates.insert(0, 6, 3)
     l66 = Location.new
     l66.coordinates.insert(0, 6, 6)
-    @locations.insert(0, [l00, nil, nil, l03, nil, nil, l06])
-    @locations.insert(1, [nil, l11, nil, l13, nil, l15, nil])
-    @locations.insert(2, [nil, nil, l22, l23, l24, nil, nil])
-    @locations.insert(3, [l30, l31, l32, nil, l34, l35, l36])
-    @locations.insert(4, [nil, nil, l42, l43, l44, nil, nil])
-    @locations.insert(5, [nil, l51, nil, l53, nil, l55, nil])
-    @locations.insert(6, [l60, nil, nil, l63, nil, nil, l66])
+    @locations.push([l00, nil, nil, l03, nil, nil, l06])
+    @locations.push([nil, l11, nil, l13, nil, l15, nil])
+    @locations.push([nil, nil, l22, l23, l24, nil, nil])
+    @locations.push([l30, l31, l32, nil, l34, l35, l36])
+    @locations.push([nil, nil, l42, l43, l44, nil, nil])
+    @locations.push([nil, l51, nil, l53, nil, l55, nil])
+    @locations.push([l60, nil, nil, l63, nil, nil, l66])
   end
 
   #Return location at specified coordinates or nil if invalid coordinates

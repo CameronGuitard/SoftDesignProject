@@ -3,6 +3,7 @@ require_relative "Piece"
 #Location object which stores its coordinates and a Piece
 class Location
   attr_accessor :coordinates
+  attr_reader :piece
 
   #Creates an instance of Location
   def initialize

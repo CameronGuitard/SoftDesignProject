@@ -8,4 +8,4 @@ puts "Please enter player 2's name"
 input = gets.chomp
 player2 = Player.new(input)
 controller = GameController.new(player1,player2)
-controller.startGame()
+controller.startGame(player1, player2)
