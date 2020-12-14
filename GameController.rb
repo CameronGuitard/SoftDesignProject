@@ -31,15 +31,8 @@ class GameController
             piece = nil         
         end
 
-        # assign players pieces.
-        @player1.givePieces(@player1.assignedColour())
-        @player2.givePieces(@player2.assignedColour())
-
-        if @player1.assignedColour() == "White"
-            @player1.turnStart()
-        else
-            @player2.turnStart()
-        end 
+        # calls start game
+        startGame()
 
     end
     
@@ -62,8 +55,8 @@ class GameController
 
         # location of piece
         location = piece.location()
-        X_coordinate = location[0]
-        Y_coordinate = location[1]
+        X_coordinate = location.coordinates[0]
+        Y_coordinate = location.coordinates[1]
 
         hMill = false
         vMill = false
@@ -76,7 +69,20 @@ class GameController
             row.each do |location|
                 
                 if location.piece != nil && location[0] == X_coordinate
-                    HorizontalMill.push(location.piece)
+                    if X_coordinate == 3 && Y_coordinate =< 3
+                        # only add piece if it is in row 3 column 0-3. 
+                        if location.coordinates[1] =< 3
+                            HorizontalMill.push(location.piece)
+                        end
+                    elsif X_coordinate == 3 && Y_coordinate >= 4
+                        # only add piece if it is in row 3 column 4-6. 
+                        if location.coordinates[1] >= 4
+                            HorizontalMill.push(location.piece)
+                        end
+                    else
+                        # will add the piece if its not in the strange row
+                        HorizontalMill.push(location.piece)
+                    end
                 end                                 
             end
         end
@@ -109,7 +115,7 @@ class GameController
 
 
         if HorizontalMill.length > 3
-            puts "I made an oopsy this should not happen. test this later im to lazy now"
+            puts "Should not happen if it does i made a mistake"   
         elsif HorizontalMill.length == 3
             # check for mill
             # assume there is a mill
@@ -170,9 +176,16 @@ class GameController
             else
                 # should return true if the move is valid.
                 bool = @board.isAdjacent(piece,newLocation)
+                if bool
+                    return true
+                else
+                    puts "Cannot move a piece to a non adjacent space."
+                    return false
+                end
             end
         else
             # should the space is not empty, the move is invalid
+            puts "Cannot move a piece to an occupied space."
             return false
         end
 
@@ -196,6 +209,7 @@ class GameController
                 for piece in @player1.playedPieces
                     if !checkMill(piece)
                         # if a piece is not in a mill
+                        puts "Cannot remove a piece from a Mill. There is annother valid target."
                         return false
                     end
                 end
@@ -205,6 +219,7 @@ class GameController
                 for piece in @player2.playedPieces
                     if !checkMill(piece)
                         # if a piece is not in a mill
+                        puts "Cannot remove a piece from a Mill. There is annother valid target."
                         return false
                     end
                 end
@@ -270,8 +285,36 @@ class GameController
             player2.turnStart()
         end
         
+        while !checkWin() do
 
+            if player1.isActive
+                # player 1 is active
+                player1.turnEnd()
+                @view.refreshTurnIndicator()
+                player2.turnStart()
+             else
+                # player 2 is active
+                player2.turnEnd()
+                @view.refreshTurnIndicator()
+                player1.turnStart()
+             end
 
+        end
+
+        # ask if user's want to reset.
+        puts " Do you want to reset and play annother game? Please enter Y or N."
+        answer = gets
+        answer = answer.chomp
+
+        # handle input
+        if answer == 'Y' || answer == 'y'
+            reset()
+        elsif answer == 'N' || answer == 'n'
+            puts "Goodbye I hope you had fun playing the game!"
+        else
+            puts " Invalid input detected. The game will be reset"
+            reset()        
+        end    
     end
 
     # public method
@@ -284,8 +327,10 @@ class GameController
 
         if @player1.numPlayedPieces <=2 && @player1.numUnplayedPieces == 0 
             puts "Player 2 has won the game!"
+            return true
         elsif @player2.numPlayedPieces <=2 && @player2.numUnplayedPieces == 0 
             puts "Player 1 has won the game!"
+            return true
         else
             # both players have more then 2 pieces on the bord.
             # check if players have valid moves left.
@@ -337,28 +382,23 @@ class GameController
 
                 if !player1Valid && !player2Valid   
                     puts "Both Player's have no moves. The game is a draw"
-                    reset()
-                    @view.refreshBoard() #TODO: check this. 
+                    return true
                 
                 elsif !player1Valid
                     # player1 has no remaining moves
                     puts  @player1.name +" has no valid moves,"  + @player2.name + " wins!"
-                    reset()
-                    @view.refreshBoard() #TODO: check this. 
+                    return true
 
                 
                 elsif !player2Valid
                     # player1 has no rem
                     puts  @player2.name +" has no valid moves,"  + @player1.name + " wins!"
-                    reset()
-                    @view.refreshBoard() #TODO: check this. 
+                    return true
                     
                 else
                     puts " both players have valid moves left. The game is not over."
-                
+                    return false
                 end
-
-
             end
         end
 
@@ -369,10 +409,6 @@ class GameController
     # Msg is sent to other player, if that player accepts the game is ended.
     def forefit(player)
 
-       # @player1.turnEnd()
-       # @player2.turnEnd()
-       # player.turnStart()
-
         puts  player.name +" Please accept(Y) or reject(N) your opponents surrender."
         answer = gets
         answer = answer.chomp
@@ -381,17 +417,16 @@ class GameController
         if answer == 'Y' || answer == 'y'
             # player1 calls what face they want
             puts  player.name +" Has won the game!"
-            reset()
-            @view.refreshBoard() #TODO: check this
-
-
+            # reset()
+            # force end the game?
+            exit
+            
         elsif answer == 'N' || answer == 'n'
             # player1 calls what face they want
             puts  player.name +" Has rejected surrender. The game continues!"
 
         else
-            puts  player.name +" Has suplied invalid input. The game continues!"
-            
+            puts  player.name +" Has suplied invalid input. The game continues!" 
         end
 
     end
