@@ -322,14 +322,16 @@ class GameController
             if player1.isActive
                 # player 1 is active
                 @player1.turnEnd()
-                @view.refreshTurnIndicator(@player1)
+                @view.refreshTurnIndicator(@player2)
                 @view.refreshBoard(@board, [])
+                @view.refreshUnplayedPieces(@player2)
                 player2.turnStart()
              else
                 # player 2 is active
                 @player2.turnEnd()
-                @view.refreshTurnIndicator(@player2)
+                @view.refreshTurnIndicator(@player1)
                 @view.refreshBoard(@board, [])
+                @view.refreshUnplayedPieces(@player1)
                 player1.turnStart()
              end
 
