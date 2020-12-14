@@ -1,4 +1,11 @@
-class GameController
+require_relative "board"
+require_relative "player"
+require_relative "location"
+require_relative "piece"
+require_relative "coin"
+require_relative "gameView"
+
+class GameController 
     # each player has a bag and a cup
     def initialize(player1, player2)
         @player1 = player1
@@ -433,3 +440,4 @@ class GameController
         end
 
     end
+end
