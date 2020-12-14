@@ -1,4 +1,4 @@
-require "./Piece.rb"
+require_relative "piece"
 #
 #   This class represents a player for the game
 #
@@ -78,7 +78,7 @@ class Player
     #This gives the user 12 pieces of the specified colour
     def givePieces(colour)
         for i in 1..12 do
-            @unplayedPieces.push(Piece.New(colour))
+            @unplayedPieces.push(Piece.new(colour))
         end
     end
 

@@ -65,6 +65,9 @@ class GameController
         # there will be a special consideration for any piece containing 4. 
 
         # location of piece
+        puts "is mill getting a piece? check below to find out!"
+        puts piece
+
         x_coordinate = piece.location.coordinates[0]
         y_coordinate = piece.location.coordinates[1]
 
@@ -73,12 +76,14 @@ class GameController
 
         verticalMill = []
         horizontalMill = []
+
+
         
         #horisontal
         @board.locations.each do |row|
             row.each do |location|
                 
-                if location.piece != nil && location[0] == x_coordinate
+                if  location != nil && !location.isEmpty() && location.coordinates[0] == x_coordinate
                     if x_coordinate == 3 && y_coordinate <= 3
                         # only add piece if it is in row 3 column 0-3. 
                         if location.coordinates[1] <= 3
@@ -100,7 +105,7 @@ class GameController
         #verticle
         @board.locations.each do |row|
             row.each do |location|           
-                if location.piece != nil && location[0] == y_coordinate
+                if location != nil && !location.isEmpty() && location.coordinates[1] == y_coordinate
                     verticalMill.push(location.piece)
                 end
             end
