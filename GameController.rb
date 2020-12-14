@@ -135,11 +135,6 @@ class GameController
         else
             return false
         end
-        
-
-
-
-
     end
 
     # public method
@@ -279,9 +274,11 @@ class GameController
 
         if first
             puts "Congrats Player 1 you are going first"
+            @view.refreshBoard(@board)
             player1.turnStart()
         else
             puts "Player 1, You are going second"
+            @view.refreshBoard(@board)
             player2.turnStart()
         end
         
@@ -289,13 +286,15 @@ class GameController
 
             if player1.isActive
                 # player 1 is active
-                player1.turnEnd()
-                @view.refreshTurnIndicator()
+                @player1.turnEnd()
+                @view.refreshTurnIndicator(@player1)
+                @view.refreshBoard(@board)
                 player2.turnStart()
              else
                 # player 2 is active
-                player2.turnEnd()
-                @view.refreshTurnIndicator()
+                @player2.turnEnd()
+                @view.refreshTurnIndicator(@player2)
+                @view.refreshBoard(@board)
                 player1.turnStart()
              end
 
