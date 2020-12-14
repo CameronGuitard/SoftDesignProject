@@ -65,10 +65,6 @@ class GameController
         # there will be a special consideration for any piece containing 4. 
 
         # location of piece
-        puts "A"
-        puts piece.location
-        puts "B"
-        puts piece.location.coordinates
 
         x_coordinate = piece.location.coordinates[0]
         y_coordinate = piece.location.coordinates[1]
@@ -202,7 +198,6 @@ class GameController
             end
         else
             # should the space is not empty, the move is invalid
-            puts "Cannot move a piece to an occupied space."
             return false
         end
 
@@ -218,6 +213,19 @@ class GameController
             puts "nil"
             return false
         end
+        
+        if @player1.isActive
+            if targetPiece.colour == @player1.assignedColour()
+                puts "Cannot remove your own piece."
+                return false
+            end
+        else
+            if targetPiece.colour == @player2.assignedColour()
+                puts "Cannot remove your own piece."
+                return false
+            end
+        end
+
         ## check if piece is in a mill    
         if !checkMill(targetPiece)
             # not in mill it is a valid capture
@@ -226,7 +234,6 @@ class GameController
             # it is in a mill, check if it is a valid removal
             if targetPiece.colour == @player1.assignedColour()
                 #piece is player1's
-                
                 for piece in @player1.playedPieces
                     if !checkMill(piece)
                         # if a piece is not in a mill
@@ -355,11 +362,11 @@ class GameController
         else
             # both players have more then 2 pieces on the bord.
             # check if players have valid moves left.
-            if @player1.numUnplayedPieces >= 0 
+            if @player1.numUnplayedPieces > 0 
                 # No winner there is a valid move for player1.
                 puts "Player 1 has valid moves"
                 return false
-            elsif @player2.numUnplayedPieces >= 0 
+            elsif @player2.numUnplayedPieces > 0 
                 puts "Player 2 has valid moves"
                 return false
             else

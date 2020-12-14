@@ -6,6 +6,7 @@ class Player
     attr_writer :gameBoard
     attr_writer :gameController
     attr_accessor :isActive
+    attr_reader :playedPieces, :unplayedPieces
     #This initializing the player with a name, a gameBoard instance and a gameController instance 
     def initialize(name)
         @name = name
@@ -27,12 +28,12 @@ class Player
                 puts "Please select the location to place a piece with the following format 'x y'"
                 input = gets.chomp
                 coordinates = input.split(' ')
-                puts "coordinates: " + coordinates[0]
                 location = @gameBoard.selectLocation(coordinates[0].to_i,coordinates[1].to_i)
                 validMove = @gameController.validMove(currentPiece,location)
                 if validMove
                     @gameBoard.movePiece(currentPiece,location)
                     @unplayedPieces.shift()
+                    @playedPieces.push(currentPiece)
                 end
             end
         else #Workflow for when the player is moving pieces around the board
@@ -49,6 +50,8 @@ class Player
                 validMove = @gameController.validMove(selectedPiece,selectedLocation)
                 if validMove
                     @gameBoard.movePiece(selectedPiece,selectedLocation)
+                else
+                    puts "Invalid move."
                 end
             end
         end
