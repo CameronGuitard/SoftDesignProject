@@ -59,33 +59,33 @@ class GameController
 
         # location of piece
         location = piece.location()
-        X_coordinate = location.coordinates[0]
-        Y_coordinate = location.coordinates[1]
+        x_coordinate = location.coordinates[0]
+        y_coordinate = location.coordinates[1]
 
         hMill = false
         vMill = false
 
-        VerticalMill = []
-        HorizontalMill = []
+        verticalMill = []
+        horizontalMill = []
         
         #horisontal
         @board.locations.each do |row|
             row.each do |location|
                 
-                if location.piece != nil && location[0] == X_coordinate
-                    if X_coordinate == 3 && Y_coordinate =< 3
+                if location.piece != nil && location[0] == x_coordinate
+                    if x_coordinate == 3 && y_coordinate <= 3
                         # only add piece if it is in row 3 column 0-3. 
-                        if location.coordinates[1] =< 3
-                            HorizontalMill.push(location.piece)
+                        if location.coordinates[1] <= 3
+                            horizontalMill.push(location.piece)
                         end
-                    elsif X_coordinate == 3 && Y_coordinate >= 4
+                    elsif x_coordinate == 3 && y_coordinate >= 4
                         # only add piece if it is in row 3 column 4-6. 
                         if location.coordinates[1] >= 4
-                            HorizontalMill.push(location.piece)
+                            horizontalMill.push(location.piece)
                         end
                     else
                         # will add the piece if its not in the strange row
-                        HorizontalMill.push(location.piece)
+                        horizontalMill.push(location.piece)
                     end
                 end                                 
             end
@@ -94,20 +94,20 @@ class GameController
         #verticle
         @board.locations.each do |row|
             row.each do |location|           
-                if location.piece != nil && location[0] == Y_coordinate
-                    VerticalMill.push(location.piece)
+                if location.piece != nil && location[0] == y_coordinate
+                    verticalMill.push(location.piece)
                 end
             end
         end
 
 
-        if VerticalMill.length > 3
+        if verticalMill.length > 3
             puts "I made an oopsy this should not happen. test this later im to lazy now"
-        elsif VerticalMill.length == 3
+        elsif verticalMill.length == 3
             # check for mill
             # assume there is a mill
             vMill = true
-            for millPiece in VerticalMill
+            for millPiece in verticalMill
                 if !(millPiece.colour() == piece.colour())
                     vMill = false
                 end
@@ -118,13 +118,13 @@ class GameController
         end
 
 
-        if HorizontalMill.length > 3
+        if horizontalMill.length > 3
             puts "Should not happen if it does i made a mistake"   
-        elsif HorizontalMill.length == 3
+        elsif horizontalMill.length == 3
             # check for mill
             # assume there is a mill
             hMill = true
-            for millPiece in HorizontalMill
+            for millPiece in horizontalMill
                 if !(millPiece.colour() == piece.colour())
                     hMill = false
                 end
