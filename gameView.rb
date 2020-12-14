@@ -5,28 +5,28 @@ class GameView
     def refreshBoard(board, millPieces)
         board.locations.each {|row|
             printableRow = ""
-            puts row
+
             row.each{|location|
                 if location == nil || location.isEmpty()
-                    printableRow += " "
+                    printableRow += "   "
                 else
-                    isMill = false
-                    millPieces.each {|millPiece|
-                        if millPiece.location == location
-                            isMill = true
-                            break
-                        end
-                    }
-                    if isMill
-                        printableRow += "o".yellow
-                    elsif location != nil && location.piece.colour() == "#0000FF"
-                        printableRow += "o".blue
+                    # isMill = false
+                    # millPieces.each {|millPiece|
+                    #     if millPiece.location == location
+                    #         isMill = true
+                    #         break
+                    #     end
+                    # }
+                    # if isMill
+                    #     printableRow += "o".yellow
+                    if location != nil && location.piece.colour() == "#0000FF"
+                        printableRow += " o ".blue
                     else
-                        printableRow += "o".red
+                        printableRow += " o ".red
                     end
                 end
             }
-            puts row
+            puts printableRow
         }
     end
 
