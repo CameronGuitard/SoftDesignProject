@@ -5,7 +5,7 @@ require_relative "piece"
 class Board
 
   #Creates a new instance of board containing empty locations
-  def initialize()
+  def initialize
     @locations = Array.new(7)
     l00 = Location.new
     l00.coordinates.insert(0, 0, 0)
@@ -273,5 +273,4 @@ class Board
       end
     end
   end
-
 end
