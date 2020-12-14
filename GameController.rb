@@ -6,8 +6,12 @@ class GameController
         @board = Board.new() # creates new Board
         @coin = Coin.new() # new coin
         @view = GameView.new() # might not need this
+
+        @player1.gameBoard = @board
+        @player2.gameBoard = @board
+        @player1.gameController = self
+        @player2.gameController = self
     end
-    attr_reader :bag, :cup, :throw_arr  #accessor for bag and cup 
 
     #public method
     #Resets the game, returns true if successfull
