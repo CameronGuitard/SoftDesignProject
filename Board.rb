@@ -1,5 +1,5 @@
-require_relative "Location"
-require_relative "Piece"
+require_relative "Location.rb"
+require_relative "Piece.rb"
 
 #Board object which stores locations and pieces
 class Board

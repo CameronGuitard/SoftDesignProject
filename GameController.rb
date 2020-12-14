@@ -1,9 +1,9 @@
-require_relative "board"
-require_relative "player"
-require_relative "location"
-require_relative "piece"
-require_relative "coin"
-require_relative "gameView"
+require_relative "Board.rb"
+require_relative "Player.rb"
+require_relative "Location.rb"
+require_relative "Piece.rb"
+require_relative "Coin.rb"
+require_relative "GameView.rb"
 
 class GameController 
     # each player has a bag and a cup
