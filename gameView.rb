@@ -5,9 +5,7 @@ class GameView
     def refreshBoard(board, millPieces)
         board.locations.each {|row|
             printableRow = ""
-            puts " look under"
             puts row
-            puts " look up"
             row.each{|location|
                 if location == nil || location.isEmpty()
                     printableRow += " "

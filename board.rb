@@ -68,7 +68,9 @@ class Board
   #Return location at specified coordinates or nil if invalid coordinates
   def selectLocation(x, y)
     if x.instance_of?(Integer) && y.instance_of?(Integer)
+      puts "hello"
       if x.between?(0,6) && y.between?(0,6)
+        puts "fuck"
         return @locations[x][y]
       end
     end

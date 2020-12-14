@@ -5,6 +5,7 @@ require "./Piece.rb"
 class Player
     attr_writer :gameBoard
     attr_writer :gameController
+    attr_accessor :isActive
     #This initializing the player with a name, a gameBoard instance and a gameController instance 
     def initialize(name)
         @name = name
@@ -26,7 +27,8 @@ class Player
                 puts "Please select the location to place a piece with the following format 'x y'"
                 input = gets.chomp
                 coordinates = input.split(' ')
-                location = @gameBoard.selectLocation(coordinates[0],coordinates[1])
+                puts "coordinates: " + coordinates[0]
+                location = @gameBoard.selectLocation(coordinates[0].to_i,coordinates[1].to_i)
                 validMove = @gameController.validMove(currentPiece,location)
                 if validMove
                     @gameBoard.movePiece(currentPiece,location)
@@ -39,11 +41,11 @@ class Player
                 puts "Please select the piece to move with the following format 'x y'"
                 input = gets.chomp
                 coordinates.split(' ')
-                selectedPiece = @gameBoard.selectPiece(coordinates[0],coordinates[1])
+                selectedPiece = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
                 puts "Please select the location to move the piece to with the following format 'x y'"
                 input = gets.chomp
                 coordinates.split(' ')
-                selectedLocation = @gameBoard.selectPiece(coordinates[0],coordinates[1])
+                selectedLocation = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
                 validMove = @gameController.validMove(selectedPiece,selectedLocation)
                 if validMove
                     @gameBoard.movePiece(selectedPiece,selectedLocation)
@@ -59,7 +61,7 @@ class Player
                 puts "Please select an opponents piece to remove with the following format 'x y'"
                 input = gets.chomp
                 coordinates = input.split(' ')
-                milledPiece = @gameBoard.selectPiece(coordinates[0],coordinates[1])
+                milledPiece = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
                 validRemoval = @gameController.validRemoval(milledPiece)
                 if validMill
                     @gameBoard.removePiece(milledPiece)
@@ -76,7 +78,7 @@ class Player
     #This gives the user 12 pieces of the specified colour
     def givePieces(colour)
         for i in 1..12 do
-            @unplayedPieces.push(colour)
+            @unplayedPieces.push(Piece.New(colour))
         end
     end
 

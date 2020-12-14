@@ -65,9 +65,8 @@ class GameController
         # there will be a special consideration for any piece containing 4. 
 
         # location of piece
-        location = piece.location()
-        x_coordinate = location.coordinates[0]
-        y_coordinate = location.coordinates[1]
+        x_coordinate = piece.location.coordinates[0]
+        y_coordinate = piece.location.coordinates[1]
 
         hMill = false
         vMill = false
@@ -156,15 +155,19 @@ class GameController
         # piece can move to any empty adjacent space.
         # might need to account for placing pieces. can be counted as a fly move i guess 
 
+        if newLocation == nil
+            return false
+        end
+
         # check if its a fly move. 
         if @player1.isActive
-           if @player1.numUnplayedPieces <=3
+           if @player1.numPlayedPieces < 3
                 fly = true 
            else
                 fly = false
            end
         else
-            if @player2.numUnplayedPieces <=3
+            if @player2.numPlayedPieces < 3
                 fly = true 
            else
                 fly = false
@@ -173,11 +176,13 @@ class GameController
 
 
         #checks if space is empty:
-        if @board.selectLocation(newLocation).isEmpty
+        if newLocation.isEmpty()
 
             # check if its a fly move
             if fly
                 # if its a fly and the target location is empty its allowed. 
+                return true
+            elsif piece.location == nil
                 return true
             else
                 # should return true if the move is valid.
@@ -185,7 +190,6 @@ class GameController
                 if bool
                     return true
                 else
-                    puts "Cannot move a piece to a non adjacent space."
                     return false
                 end
             end
