@@ -12,7 +12,7 @@ class Location
 
   #Adds piece to this location 
   def addPiece(piece)
-    if piece.instance_of? Piece && @piece == nil
+    if piece.instance_of?(Piece) && @piece == nil
       @piece = piece
       @piece.location = self
       return true
