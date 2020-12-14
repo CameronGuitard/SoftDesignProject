@@ -57,7 +57,7 @@ class Board
     @locations.insert(0, [l00, nil, nil, l03, nil, nil, l06])
     @locations.insert(1, [nil, l11, nil, l13, nil, l15, nil])
     @locations.insert(2, [nil, nil, l22, l23, l24, nil, nil])
-    @locations.insert(3, [l03, l31, l32, nil, l34, l35, l36])
+    @locations.insert(3, [l30, l31, l32, nil, l34, l35, l36])
     @locations.insert(4, [nil, nil, l42, l43, l44, nil, nil])
     @locations.insert(5, [nil, l51, nil, l53, nil, l55, nil])
     @locations.insert(6, [l60, nil, nil, l63, nil, nil, l66])
@@ -66,7 +66,7 @@ class Board
   #Return location at specified coordinates or nil if invalid coordinates
   def selectLocation(x, y)
     if x.instance_of?(Integer) && y.instance_of?(Integer)
-      if (x >= 0 && x <= 6) && (y >= 0 && y <= 6)
+      if x.between?(0,6) && y.between?(0,6)
         return @locations[x][y]
       end
     end
@@ -76,7 +76,7 @@ class Board
   #Return piece at specified coordinates or nil if invalid coordinates (piece is removed from board)
   def selectPiece(x, y)
     if x.instance_of?(Integer) && y.instance_of?(Integer)
-      if (x >= 0 && x <= 6) && (y >= 0 && y <= 6)
+      if x.between?(0,6) && y.between?(0,6)
         return @locations[x][y].removePiece
       end
     end
@@ -104,13 +104,173 @@ class Board
   #Checks if location on the board is empty
   def isEmpty(x, y)
     if x.instance_of?(Integer) && y.instance_of?(Integer)
-      if (x >= 0 && x <= 6) && (y >= 0 && y <= 6)
+      if x.between?(0,6) && y.between?(0,6)
         return @locations[x][y].isEmpty
       end
     end
   end
 
+  #Checks if piece is adjacent to location
   def isAdjacent(piece, location)
+    if piece.instance_of?(Piece) && newLocation.instance_of?(Location) && piece.location != nil
+      x1 = piece.location.coordinates[0]
+      y1 = piece.location.coordinates[1]
+      x2 = location.coordinates[0]
+      y2 = location.coordinates[1]
+      adjacent = false
+      if ((x1.between?(0,6)) && (y1.between?(0,6)) &&
+         (x2.between?(0,6)) && (y2.between?(0,6)))
+        pieceCoordinates = "#{x1}#{y1}"
+        locationCoordinates = "#{x2}#{y2}"
+        case pieceCoordinates
+        when "00"
+          case locationCoordinates
+          when "30", "03"
+            adjacent = true
+          else
+          end
+        when "03"
+          case locationCoordinates
+          when "00", "13", "06"
+            adjacent = true
+          else
+          end
+        when "06"
+          case locationCoordinates
+          when "03", "36"
+            adjacent = true
+          else
+          end
+        when "11"
+          case locationCoordinates
+          when "13", "31"
+            adjacent = true
+          else
+          end
+        when "13"
+          case locationCoordinates
+          when "03", "11", "15", "23"
+            adjacent = true
+          else
+          end
+        when "15"
+          case locationCoordinates
+          when "13", "35"
+            adjacent = true
+          else
+          end
+        when "22"
+          case locationCoordinates
+          when "23", "32"
+            adjacent = true
+          else
+          end
+        when "23"
+          case locationCoordinates
+          when "13", "22", "24"
+            adjacent = true
+          else
+          end
+        when "24"
+          case locationCoordinates
+          when "23", "34"
+            adjacent = true
+          else
+          end
+        when "30"
+          case locationCoordinates
+          when "00", "31", "60"
+            adjacent = true
+          else
+          end
+        when "31"
+          case locationCoordinates
+          when "30", "11", "32", "51"
+            adjacent = true
+          else
+          end
+        when "32"
+          case locationCoordinates
+          when "22", "31", "42"
+            adjacent = true
+          else
+          end
+        when "34"
+          case locationCoordinates
+          when "24", "35", "44"
+            adjacent = true
+          else
+          end
+        when "35"
+          case locationCoordinates
+          when "15", "34", "36", "44"
+            adjacent = true
+          else
+          end
+        when "36"
+          case locationCoordinates
+          when "06", "35", "66"
+            adjacent = true
+          else
+          end
+        when "42"
+          case locationCoordinates
+          when "32", "43"
+            adjacent = true
+          else
+          end
+        when "43"
+          case locationCoordinates
+          when "42", "43", "53"
+            adjacent = true
+          else
+          end
+        when "44"
+          case locationCoordinates
+          when "34", "43"
+            adjacent = true
+          else
+          end
+        when "51"
+          case locationCoordinates
+          when "31", "53"
+            adjacent = true
+          else
+          end
+        when "53"
+          case locationCoordinates
+          when "43", "55", "63", "51"
+            adjacent = true
+          else
+          end
+        when "55"
+          case locationCoordinates
+          when "35", "53"
+            adjacent = true
+          else
+          end
+        when "60"
+          case locationCoordinates
+          when "03", "63"
+            adjacent = true
+          else
+          end
+        when "63"
+          case locationCoordinates
+          when "60", "53", "55"
+            adjacent = true
+          else
+          end
+        when "66"
+          case locationCoordinates
+          when "36", "63"
+            adjacent = true
+          else
+          end
+        else
+        end
+      end
+    end
   end
 
 end
