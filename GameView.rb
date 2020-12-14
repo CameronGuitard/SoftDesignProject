@@ -3,8 +3,11 @@ require 'colorize'
 class GameView
 
     def refreshBoard(board, millPieces)
+        rowNumber = 0
+        puts "  0  1  2  3  4  5  6 Y"
         board.locations.each {|row|
-            printableRow = ""
+            printableRow = rowNumber.to_s + " "
+            rowNumber += 1
 
             row.each{|location|
                 if location == nil || location.isEmpty()
@@ -20,14 +23,16 @@ class GameView
                     # if isMill
                     #     printableRow += "o".yellow
                     if location != nil && location.piece.colour() == "#0000FF"
-                        printableRow += " o ".blue
+                        printableRow += "o  ".blue
                     else
-                        printableRow += " o ".red
+                        printableRow += "o  ".red
                     end
                 end
             }
             puts printableRow
         }
+
+        puts "X"
     end
 
     def refreshTurnIndicator(player)
