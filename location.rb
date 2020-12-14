@@ -1,4 +1,4 @@
-require_relative "piece"
+require_relative "Piece"
 
 #Location object which stores its coordinates and a Piece
 class Location

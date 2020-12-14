@@ -1,5 +1,5 @@
-require_relative "location"
-require_relative "piece"
+require_relative "Location"
+require_relative "Piece"
 
 #Board object which stores locations and pieces
 class Board
