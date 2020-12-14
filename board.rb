@@ -81,7 +81,7 @@ class Board
   def selectPiece(x, y)
     if x.instance_of?(Integer) && y.instance_of?(Integer)
       if x.between?(0,6) && y.between?(0,6)
-        return @locations[x][y].removePiece
+        return @locations[x][y].piece
       end
     end
     return nil

@@ -63,7 +63,7 @@ class Player
                 coordinates = input.split(' ')
                 milledPiece = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
                 validRemoval = @gameController.validRemoval(milledPiece)
-                if validMill
+                if validRemoval
                     @gameBoard.removePiece(milledPiece)
                 end
             end

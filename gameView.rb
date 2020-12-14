@@ -31,7 +31,7 @@ class GameView
     end
 
     def refreshTurnIndicator(player)
-        if (player.assignColour == "#0000FF")
+        if (player.assignedColour() == "#0000FF")
             puts "Player Turn: " + "o".blue
         else
             puts "Player Trun: " + "o".red
@@ -39,7 +39,7 @@ class GameView
     end
 
     def refreshUnplayedPieces(player)
-        if (player.assignColour == "#0000FF")
+        if (player.assignedColour() == "#0000FF")
             puts "Unplayed Pieces: " + "o".blue + " " + player.numUnplayedPieces().to_s
 
         else

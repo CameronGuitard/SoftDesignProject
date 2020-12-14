@@ -65,8 +65,10 @@ class GameController
         # there will be a special consideration for any piece containing 4. 
 
         # location of piece
-        puts "is mill getting a piece? check below to find out!"
-        puts piece
+        puts "A"
+        puts piece.location
+        puts "B"
+        puts piece.location.coordinates
 
         x_coordinate = piece.location.coordinates[0]
         y_coordinate = piece.location.coordinates[1]
@@ -212,6 +214,10 @@ class GameController
     # false if not
     def validRemoval(targetPiece)
 
+        if targetPiece == nil
+            puts "nil"
+            return false
+        end
         ## check if piece is in a mill    
         if !checkMill(targetPiece)
             # not in mill it is a valid capture
