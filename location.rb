@@ -5,7 +5,7 @@ class Location
   attr_accessor :coordinates
 
   #Creates an instance of Location
-  def initialize()
+  def initialize
     @coordinates = Array.new(2)
     @piece = nil
   end
@@ -21,7 +21,7 @@ class Location
   end
 
   #Returns stored Piece
-  def removePiece()
+  def removePiece
     piece = @piece
     @piece = nil
     piece.location = nil
@@ -29,10 +29,17 @@ class Location
   end
 
   #Returns true if Location has no piece
-  def isEmpty()
+  def isEmpty
     if @piece == nil
       return true
     end
     false
   end
+
+  def ==(other)
+    other.instance_of?(Location) &&
+    self.coordinates[0] == other.coordinates[0] &&
+    self.coordinates[1] == other.cooridnates[1]
+  end
+
 end
