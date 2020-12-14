@@ -8,8 +8,8 @@ class Piece
         return @colour
     end
 
-    def setLocation(Location)
-        @location = Location
+    def setLocation(location)
+        @location = location
     end
 
     def location
