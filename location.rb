@@ -40,6 +40,6 @@ class Location
   def ==(other)
     other.instance_of?(Location) &&
     @coordinates[0] == other.coordinates[0] &&
-    @coordinates[1] == other.cooridnates[1]
+    @coordinates[1] == other.coordinates[1]
   end
 end
