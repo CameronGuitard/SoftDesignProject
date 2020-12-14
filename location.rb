@@ -14,6 +14,7 @@ class Location
   def addPiece(piece)
     if piece.instance_of? Piece && @piece == nil
       @piece = piece
+      @piece.location = self
       return true
     end
     false
@@ -23,6 +24,7 @@ class Location
   def removePiece()
     piece = @piece
     @piece = nil
+    piece.location = nil
     piece
   end
 
