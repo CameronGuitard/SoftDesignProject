@@ -15,7 +15,7 @@ class GameView
                         if y == 1 || y == 2 || y == 4 || y == 5
                             printableRow += "———"
                         elsif y == 0 || y == 3 || y == 6
-                            printableRow += " x "
+                            printableRow += " • "
                         else
                             printableRow += "   "
                         end
@@ -27,7 +27,7 @@ class GameView
                         elsif y == 2 || y == 4
                             printableRow += "———"
                         elsif y == 1 || y == 5 || y == 3
-                            printableRow += " x "
+                            printableRow += " • "
                         else
                             printableRow += "   "
                         end
@@ -37,7 +37,7 @@ class GameView
                         if y == 0 || y == 6 ||y == 1 || y == 5
                             printableRow += " | "
                         elsif y == 2 || y == 3 || y == 4
-                            printableRow += " x "
+                            printableRow += " • "
                         end
                     end
 
@@ -45,7 +45,7 @@ class GameView
                         if y == 3
                             printableRow += "   "
                         else
-                            printableRow += " x "
+                            printableRow += " • "
                         end
                     end
                     
