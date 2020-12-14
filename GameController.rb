@@ -106,7 +106,20 @@ class GameController
         @board.locations.each do |row|
             row.each do |location|           
                 if location != nil && !location.isEmpty() && location.coordinates[1] == y_coordinate
-                    verticalMill.push(location.piece)
+                    if y_coordinate == 3 && x_coordinate <= 3
+                        # only add piece if it is in column 3 row 0-3. 
+                        if location.coordinates[0] <= 3
+                            verticalMill.push(location.piece)
+                        end
+                    elsif y_coordinate == 3 && x_coordinate >= 4
+                        # only add piece if it is in row 3 column 4-6. 
+                        if location.coordinates[0] >= 4
+                            verticalMill.push(location.piece)
+                        end
+                    else
+                        # will add the piece if its not in the strange row
+                        verticalMill.push(location.piece)
+                    end
                 end
             end
         end
