@@ -1,3 +1,5 @@
+require_relative 'location'
+
 class Piece
     attr_accessor :colour
     attr_accessor :location
