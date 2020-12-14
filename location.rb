@@ -36,10 +36,10 @@ class Location
     false
   end
 
+  #Overrides compare
   def ==(other)
     other.instance_of?(Location) &&
-    self.coordinates[0] == other.coordinates[0] &&
-    self.coordinates[1] == other.cooridnates[1]
+    @coordinates[0] == other.coordinates[0] &&
+    @coordinates[1] == other.cooridnates[1]
   end
-
 end

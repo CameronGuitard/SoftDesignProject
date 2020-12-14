@@ -121,6 +121,7 @@ class Board
       adjacent = false
       if ((x1.between?(0,6)) && (y1.between?(0,6)) &&
          (x2.between?(0,6)) && (y2.between?(0,6)))
+        #concatenate coordinates into strings for case statement
         pieceCoordinates = "#{x1}#{y1}"
         locationCoordinates = "#{x2}#{y2}"
         case pieceCoordinates
@@ -272,5 +273,6 @@ class Board
         end
       end
     end
+    adjacent
   end
 end
