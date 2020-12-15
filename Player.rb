@@ -57,9 +57,9 @@ class Player
                 coordinates= input.split(' ')
                 currentPiece = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
                 if numPlayedPieces() < 4
-                    puts "Please select the piece to move or FLY!!! With the following format 'x y', or type 'f' to forfeit"
+                    puts "Please select a location anywhere on the board to fly. With the following format 'x y', or type 'f' to forfeit"
                 else
-                    puts "Please select the piece to move with the following format 'x y', or type 'f' to forfeit"
+                    puts "Please select the location to move the piece to with the following format 'x y', or type 'f' to forfeit"
                 end
                 input = gets.chomp
                 if input == 'f'
