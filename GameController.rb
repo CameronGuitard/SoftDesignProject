@@ -204,12 +204,7 @@ class GameController
                 return true
             else
                 # should return true if the move is valid.
-                bool = @board.isAdjacent(piece,newLocation)
-                if bool
-                    return true
-                else
-                    return false
-                end
+                return @board.isAdjacent(piece,newLocation)
             end
         else
             # should the space is not empty, the move is invalid

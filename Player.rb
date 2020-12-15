@@ -50,7 +50,7 @@ class Player
                     @gameController.forfeit(self)
                     return
                 end
-                coordinates.split(' ')
+                coordinates= input.split(' ')
                 selectedPiece = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
                 puts "Please select the location to move the piece to with the following format 'x y', or type 'f' to forfeit"
                 input = gets.chomp
@@ -58,7 +58,7 @@ class Player
                     @gameController.forfeit(self)
                     return
                 end
-                coordinates.split(' ')
+                coordinates= input.split(' ')
                 selectedLocation = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
                 validMove = @gameController.validMove(selectedPiece,selectedLocation)
                 if validMove
