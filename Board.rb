@@ -78,7 +78,7 @@ class Board
   #Return piece at specified coordinates or nil if invalid coordinates (piece is removed from board)
   def selectPiece(x, y)
     if x.instance_of?(Integer) && y.instance_of?(Integer)
-      if x.between?(0,6) && y.between?(0,6)
+      if x.between?(0,6) && y.between?(0,6) && @locations[x][y] != nil
         return @locations[x][y].piece
       end
     end
@@ -274,6 +274,7 @@ class Board
         end
       end
     end
+    puts "ADJACENT"
     adjacent
   end
 end

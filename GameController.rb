@@ -198,7 +198,6 @@ class GameController
 
         #checks if space is empty:
         if newLocation.isEmpty()
-
             # check if its a fly move
             if fly
                 # if its a fly and the target location is empty its allowed. 
