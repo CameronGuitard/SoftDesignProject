@@ -143,7 +143,7 @@ class Board
           end
         when "06"
           case locationCoordinates
-          when "03", "30"
+          when "03", "36"
             adjacent = true
           else
           end
