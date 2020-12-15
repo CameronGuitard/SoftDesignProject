@@ -4,7 +4,7 @@ class GameView
 
     def refreshBoard(board, millPieces)
         x = 0
-        puts "   0  1  2  3  4  5  6 Y"
+        puts "   0  1  2  3  4  5  6 X"
         board.locations.each {|row|
             printableRow = x.to_s + " "
 
@@ -62,7 +62,7 @@ class GameView
             x += 1
         }
 
-        puts "X"
+        puts "Y"
     end
 
     def refreshTurnIndicator(player)
