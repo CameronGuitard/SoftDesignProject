@@ -33,7 +33,7 @@ class Player
                     return
                 end
                 coordinates = input.split(' ')
-                location = @gameBoard.selectLocation(coordinates[0].to_i,coordinates[1].to_i)
+                location = @gameBoard.selectLocation(coordinates[1].to_i,coordinates[0].to_i)
                 validMove = @gameController.validMove(currentPiece,location)
                 if validMove
                     @gameBoard.movePiece(currentPiece,location)
@@ -55,7 +55,7 @@ class Player
                     return
                 end
                 coordinates= input.split(' ')
-                currentPiece = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
+                currentPiece = @gameBoard.selectPiece(coordinates[1].to_i,coordinates[0].to_i)
                 if numPlayedPieces() < 4
                     puts "Please select a location anywhere on the board to fly. With the following format 'x y', or type 'f' to forfeit"
                 else
@@ -67,7 +67,7 @@ class Player
                     return
                 end
                 coordinates= input.split(' ')
-                selectedLocation = @gameBoard.selectLocation(coordinates[0].to_i,coordinates[1].to_i)
+                selectedLocation = @gameBoard.selectLocation(coordinates[1].to_i,coordinates[0].to_i)
                 validMove = @gameController.validMove(currentPiece,selectedLocation)
                 if validMove
                     @gameBoard.movePiece(currentPiece,selectedLocation)
@@ -89,7 +89,7 @@ class Player
                     return
                 end
                 coordinates = input.split(' ')
-                milledPiece = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
+                milledPiece = @gameBoard.selectPiece(coordinates[1].to_i,coordinates[0].to_i)
                 validRemoval = @gameController.validRemoval(milledPiece)
                 if validRemoval
                     @gameBoard.removePiece(milledPiece)
