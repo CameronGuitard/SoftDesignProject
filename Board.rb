@@ -89,6 +89,9 @@ class Board
   def movePiece(piece, newLocation)
     if piece.instance_of?(Piece) && newLocation.instance_of?(Location)
       if newLocation.isEmpty
+        if piece.location != nil
+          piece.location.removePiece
+        end
         newLocation.addPiece(piece)
         piece.location = newLocation
       end
@@ -274,7 +277,6 @@ class Board
         end
       end
     end
-    puts "ADJACENT"
     adjacent
   end
 end
