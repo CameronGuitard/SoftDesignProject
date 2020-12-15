@@ -44,7 +44,11 @@ class Player
         else #Workflow for when the player is moving pieces around the board
             validMove = false
             while validMove == false
-                puts "Please select the piece to move with the following format 'x y', or type 'f' to forfeit"
+                if numPlayedPieces() < 4
+                    puts "Please select the piece to move or FLY!!! With the following format 'x y', or type 'f' to forfeit"
+                else
+                    puts "Please select the piece to move with the following format 'x y', or type 'f' to forfeit"
+                end
                 input = gets.chomp
                 if input == 'f'
                     @gameController.forfeit(self)
@@ -52,7 +56,11 @@ class Player
                 end
                 coordinates= input.split(' ')
                 currentPiece = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
-                puts "Please select the location to move the piece to with the following format 'x y', or type 'f' to forfeit"
+                if numPlayedPieces() < 4
+                    puts "Please select the piece to move or FLY!!! With the following format 'x y', or type 'f' to forfeit"
+                else
+                    puts "Please select the piece to move with the following format 'x y', or type 'f' to forfeit"
+                end
                 input = gets.chomp
                 if input == 'f'
                     @gameController.forfeit(self)

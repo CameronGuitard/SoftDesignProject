@@ -182,13 +182,13 @@ class GameController
 
         # check if its a fly move. 
         if @player1.isActive
-           if @player1.numPlayedPieces < 3
+           if @player1.numPlayedPieces <= 3
                 fly = true 
            else
                 fly = false
            end
         else
-            if @player2.numPlayedPieces < 3
+            if @player2.numPlayedPieces <= 3
                 fly = true 
            else
                 fly = false
