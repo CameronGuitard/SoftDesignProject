@@ -59,7 +59,7 @@ class Player
                     return
                 end
                 coordinates= input.split(' ')
-                selectedLocation = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
+                selectedLocation = @gameBoard.selectLocation(coordinates[0].to_i,coordinates[1].to_i)
                 validMove = @gameController.validMove(selectedPiece,selectedLocation)
                 if validMove
                     @gameBoard.movePiece(selectedPiece,selectedLocation)

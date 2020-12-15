@@ -67,6 +67,9 @@ class GameController
         # there will be a special consideration for any piece containing 4. 
 
         # location of piece
+        if piece == nil
+            return false
+        end
 
         x_coordinate = piece.location.coordinates[0]
         y_coordinate = piece.location.coordinates[1]
@@ -173,7 +176,7 @@ class GameController
         # piece can move to any empty adjacent space.
         # might need to account for placing pieces. can be counted as a fly move i guess 
 
-        if newLocation == nil
+        if newLocation == nil || piece == nil
             return false
         end
 
