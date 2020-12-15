@@ -171,8 +171,10 @@ class GameController
     # false if not
     def validMove(piece, newLocation)
         # piece can move to any empty adjacent space.
-        # might need to account for placing pieces. can be counted as a fly move i guess 
-
+        # might need to account for placing pieces. can be counted as a fly move i guess
+        puts "INFO"
+        puts piece
+        puts newLocation
         if newLocation == nil
             return false
         end
@@ -194,8 +196,9 @@ class GameController
 
 
         #checks if space is empty:
+        puts "asdf"
         if newLocation.isEmpty()
-
+            puts "inside"
             # check if its a fly move
             if fly
                 # if its a fly and the target location is empty its allowed. 
@@ -203,10 +206,12 @@ class GameController
             elsif piece.location == nil
                 return true
             else
+                puts "Hi"
                 # should return true if the move is valid.
                 return @board.isAdjacent(piece,newLocation)
             end
         else
+            puts "False"
             # should the space is not empty, the move is invalid
             return false
         end
