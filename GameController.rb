@@ -306,14 +306,14 @@ class GameController
         # assigns colours baised on who goes first
         if first
             player1.givePieces("#FF0000")
-            player1.setColour("#FF0000")
+            player1.colour = "#FF0000"
             player2.givePieces("#0000FF")
-            player2.setColour("#0000FF")
+            player2.colour = "#0000FF"
         else
             player1.givePieces("#0000FF")
-            player1.setColour("#0000FF")
+            player1.colour = "#0000FF"
             player2.givePieces("#FF0000")
-            player2.setColour("#FF0000")
+            player2.colour = "#FF0000"
             
         end
 

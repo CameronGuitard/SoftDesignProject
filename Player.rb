@@ -3,10 +3,8 @@ require_relative "Piece.rb"
 #   This class represents a player for the game
 #
 class Player
-    attr_writer :gameBoard
-    attr_writer :gameController
-    attr_accessor :isActive, :name
-    attr_reader :playedPieces, :unplayedPieces
+    attr_writer :gameBoard, :gameController, :colour
+    attr_reader :playedPieces, :unplayedPieces,:isActive, :name
     #This initializing the player with a name, a gameBoard instance and a gameController instance 
     def initialize(name)
         @name = name
@@ -123,11 +121,6 @@ class Player
     #This returns the players colour
     def assignedColour()
         return @colour
-    end
-
-    #This sets the players colour
-    def setColour(colour)#***********
-        @colour = colour
     end
 
     def clearPieces()

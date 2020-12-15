@@ -50,15 +50,6 @@ class GameView
                     end
                     
                 else
-                    # isMill = false
-                    # millPieces.each {|millPiece|
-                    #     if millPiece.location == location
-                    #         isMill = true
-                    #         break
-                    #     end
-                    # }
-                    # if isMill
-                    #     printableRow += "o".yellow
                     if location != nil && location.piece.colour() == "#0000FF"
                         printableRow += " o ".blue
                     else
