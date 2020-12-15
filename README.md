@@ -1,9 +1,19 @@
-# SoftDesignProject
+# Nine Men’s Morris
 
-How to install and run:
+Nine Men’s Morris is a two player game that involves the use of two sets of
+nine pieces and a game board. The goal of the game is to mill the other opponent’s
+pieces until they are only left with two.
 
-First install dependices with
-gem install colorize 
+## Installation
 
-Then run the game with:
+Use the package manager gem to install colorize.
+
+```bash
+gem install colorize
+```
+
+## Usage
+
+```bash
 ruby Main.rb
+```
