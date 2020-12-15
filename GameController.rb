@@ -341,6 +341,7 @@ class GameController
                 @view.refreshTurnIndicator(@player2)
 
                 player2.turnStart()
+                player1.updatePlayedPieces()
              else
                 # player 2 is active
                 @player2.turnEnd()
@@ -350,8 +351,8 @@ class GameController
                 @view.refreshTurnIndicator(@player1)
 
                 player1.turnStart()
+                player2.updatePlayedPieces()
              end
-
         end
 
         # ask if user's want to reset.
@@ -460,26 +461,14 @@ class GameController
     # public method
     # called by a player
     # Msg is sent to other player, if that player accepts the game is ended.
-    def forefit(player)
-
-        puts  player.name +" Please accept(Y) or reject(N) your opponents surrender."
-        answer = gets
-        answer = answer.chomp
-
-        # handle input
-        if answer == 'Y' || answer == 'y'
-            # player1 calls what face they want
-            puts  player.name +" Has won the game!"
-            # reset()
-            # force end the game?
-            exit
-            
-        elsif answer == 'N' || answer == 'n'
-            # player1 calls what face they want
-            puts  player.name +" Has rejected surrender. The game continues!"
-
+    def forfeit(player)
+        playerColour = player.assignedColour()
+        if @player1.assignedColour() == playerColour
+            puts "Player #{@player1.name} has forfeited"
+            @player1.clearPieces()
         else
-            puts  player.name +" Has suplied invalid input. The game continues!" 
+            puts "Player #{@player2.name} has forfeited"
+            @player2.clearPieces()
         end
 
     end

@@ -26,8 +26,12 @@ class Player
             currentPiece = @unplayedPieces[0]
             validMove = false
             while validMove == false
-                puts "Please select the location to place a piece with the following format 'x y'"
+                puts "Please select the location to place a piece with the following format 'x y', or type 'f' to forfeit"
                 input = gets.chomp
+                if input == 'f'
+                    @gameController.forfeit(self)
+                    return
+                end
                 coordinates = input.split(' ')
                 location = @gameBoard.selectLocation(coordinates[0].to_i,coordinates[1].to_i)
                 validMove = @gameController.validMove(currentPiece,location)
@@ -40,12 +44,20 @@ class Player
         else #Workflow for when the player is moving pieces around the board
             validMove = false
             while validMove == false
-                puts "Please select the piece to move with the following format 'x y'"
+                puts "Please select the piece to move with the following format 'x y', or type 'f' to forfeit"
                 input = gets.chomp
+                if input == 'f'
+                    @gameController.forfeit(self)
+                    return
+                end
                 coordinates.split(' ')
                 selectedPiece = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
-                puts "Please select the location to move the piece to with the following format 'x y'"
+                puts "Please select the location to move the piece to with the following format 'x y', or type 'f' to forfeit"
                 input = gets.chomp
+                if input == 'f'
+                    @gameController.forfeit(self)
+                    return
+                end
                 coordinates.split(' ')
                 selectedLocation = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
                 validMove = @gameController.validMove(selectedPiece,selectedLocation)
@@ -62,8 +74,12 @@ class Player
             puts "Congrats on the mill"
             validRemoval = false
             while validRemoval == false
-                puts "Please select an opponents piece to remove with the following format 'x y'"
+                puts "Please select an opponents piece to remove with the following format 'x y', or type 'f' to forfeit"
                 input = gets.chomp
+                if input == 'f'
+                    @gameController.forfeit(self)
+                    return
+                end
                 coordinates = input.split(' ')
                 milledPiece = @gameBoard.selectPiece(coordinates[0].to_i,coordinates[1].to_i)
                 validRemoval = @gameController.validRemoval(milledPiece)
@@ -104,5 +120,21 @@ class Player
     #This sets the players colour
     def setColour(colour)#***********
         @colour = colour
+    end
+
+    def clearPieces()
+        @unplayedPieces = []
+        @playedPieces = []
+    end
+
+    def updatePlayedPieces()
+        index = 0
+        while index <  @playedPieces.length()
+            if @playedPieces[index].location == nil
+                @playedPieces.delete_at(index)
+            else
+                index += 1
+            end
+        end
     end
 end
