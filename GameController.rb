@@ -353,7 +353,7 @@ class GameController
         end
 
         # ask if user's want to reset.
-        puts " Do you want to reset and play annother game? Please enter Y or N."
+        puts " Do you want to reset and play another game? Please enter Y or N."
         answer = gets
         answer = answer.chomp
 
